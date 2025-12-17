@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Feliz Cumpleaños, Gen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 0;
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      font-family: "Playfair Display", Georgia, serif;
+    }
+
+    .card {
+      max-width: 900px;
+      margin: auto;
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 60px 40px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+      animation: fadeUp 1.4s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #64748b;
+      margin-bottom: 50px;
+    }
+
+    /* ===== MARCO DEL TEXTO ===== */
+    .text-frame {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    .emoji-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 1.4rem;
+      padding: 8px;
+      user-select: none;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .emoji-side span {
+      display: block;
+    }
+
+    .content {
+      padding: 25px 30px;
+      max-width: 600px;
+    }
+
+    .emoji-row {
+      text-align: center;
+      font-size: 1.4rem;
+      margin: 8px 0;
+      user-select: none;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .texto {
+      font-size: 1.15rem;
+      line-height: 2;
+      text-align: center;
+      white-space: pre-wrap;
+      color: #1f2937;
+      min-height: 280px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .divider {
+      margin: 60px 0 40px;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #94a3b8;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transition: transform 0.4s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .firma {
+      margin-top: 60px;
+      text-align: right;
+      font-style: italic;
+      color: #334155;
+    }
+
+    .heart {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 30px;
+      color: #e11d48;
+      animation: beat 1.5s infinite;
+    }
+
+    @keyframes beat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    audio { display: none; }
+
+    @media (max-width: 700px) {
+      .emoji-side {
+        font-size: 1.2rem;
+      }
+      .content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎵 Música -->
+  <audio autoplay loop>
+    <source src="look-after-you.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+
+    <h1>Feliz Cumpleaños, Gen</h1>
+    <div class="subtitle">Un pequeño recuerdo hecho con cariño</div>
+
+    <!-- MARCO DE EMOJIS SOLO AL TEXTO -->
+    <div class="text-frame">
+
+      <div class="emoji-side" id="left"></div>
+
+      <div class="content">
+        <div class="emoji-row" id="top"></div>
+        <div class="texto" id="texto"></div>
+        <div class="emoji-row" id="bottom"></div>
+      </div>
+
+      <div class="emoji-side" id="right"></div>
+    </div>
+
+    <div class="divider">✦ Recuerdos ✦</div>
+
+    <div class="gallery">
+      <img src="img1.jpg">
+      <img src="img2.jpg">
+      <img src="img3.jpg">
+    </div>
+
+    <div class="firma">
+      Con mucho cariño,<br>
+      alguien que te aprecia más de lo que imaginas
+    </div>
+
+    <div class="heart">❤️</div>
+  </div>
+
+  <script>
+    const emojis = ["🐼", "🌸", "🍗"];
+
+    function randomEmoji() {
+      return emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+    function fillRow(id, count) {
+      document.getElementById(id).textContent =
+        Array.from({ length: count }, randomEmoji).join("");
+    }
+
+    function fillColumn(id, count) {
+      const col = document.getElementById(id);
+      col.innerHTML = "";
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement("span");
+        span.textContent = randomEmoji();
+        col.appendChild(span);
+      }
+    }
+
+    function updateFrame() {
+      fillRow("top", 16);
+      fillRow("bottom", 16);
+      fillColumn("left", 10);
+      fillColumn("right", 10);
+    }
+
+    updateFrame();
+    setInterval(updateFrame, 2500);
+
+    // Texto letra por letra
+    const textoCompleto = `
+Hola, Gen…
+
+Hoy no es un día cualquiera.
+Hoy es tu cumpleaños.
+Hoy cumple 20 años una persona muy especial
+(sí, ya estás viejita xd).
+
+En este año y medio que he tenido la suerte de conocerte,
+puedo decir con total certeza que eres una gran persona.
+Has crecido muchísimo, más de lo que tú misma imaginas.
+Has logrado superar muchas cosas,
+y hoy es un buen momento para valorar todo lo que has alcanzado.
+
+Te he visto crecer, madurar y fortalecerte,
+y eso me llena de orgullo.
+De verdad, me enorgulleces completamente.
+
+Te mando muchísimos abrazos,
+muchos ñetes también xd,
+y mis mejores deseos.
+Espero que hoy la pases increíble
+junto a las personas más importantes de tu vida
+y que este nuevo año venga cargado de momentos que te hagan feliz.
+
+GeGu desde acá te manda un fuerte abrazo y te dice:
+"Mami, ya está viejita.
+Feliz cumpleaños, mami.
+Te amo muto".
+
+Por este y por muchos años más,
+feliz cumpleaños osita pandita dormiloncita.
+`;
+
+    const contenedor = document.getElementById("texto");
+    let i = 0;
+
+    function escribir() {
+      if (i < textoCompleto.length) {
+        contenedor.textContent += textoCompleto.charAt(i);
+        i++;
+        setTimeout(escribir, 35);
+      }
+    }
+
+    escribir();
+  </script>
+
+</body>
+</html>
